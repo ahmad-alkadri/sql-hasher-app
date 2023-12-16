@@ -1,5 +1,5 @@
 {
-  "name": "my-sql-query-hasher",
+  "name": "sql-hasher-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
