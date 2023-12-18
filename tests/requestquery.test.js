@@ -1,5 +1,3 @@
-// hash-query.test.js
-
 import handler from '../pages/api/hash-query';
 import { createRequest, createResponse } from 'node-mocks-http';
 
