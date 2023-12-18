@@ -8,7 +8,7 @@ function sha256Hash(string) {
 
 let db = new sqlite3.Database('./hashmap.db');
 
-async function getColumnHash(columnName) {
+export async function getColumnHash(columnName) {
     return new Promise((resolve, reject) => {
         db.get("SELECT hashedColumnName FROM column_hashes WHERE columnName = ?", [columnName], (err, row) => {
             if (err) {
@@ -20,7 +20,7 @@ async function getColumnHash(columnName) {
     });
 };
 
-async function insertColumnHash(columnName, hashedColumnName) {
+export async function insertColumnHash(columnName, hashedColumnName) {
     return new Promise((resolve, reject) => {
         db.run("INSERT OR REPLACE INTO column_hashes (columnName, hashedColumnName) VALUES (?, ?)", [columnName, hashedColumnName], function (err) {
             if (err) {
@@ -32,7 +32,7 @@ async function insertColumnHash(columnName, hashedColumnName) {
     });
 };
 
-async function hashAllColumnRefObjects(obj, key) {
+export async function hashAllColumnRefObjects(obj, key) {
     if (obj !== null && typeof obj === 'object') {
         for (const [k, v] of Object.entries(obj)) {
             if (k === key) {
