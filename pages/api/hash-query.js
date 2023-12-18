@@ -32,18 +32,23 @@ async function insertColumnHash(columnName, hashedColumnName) {
     });
 };
 
-async function hashAllColumnRefObjects(obj, key) {
+export async function hashAllColumnRefObjects(obj, key, checkdb = true) {
     if (obj !== null && typeof obj === 'object') {
         for (const [k, v] of Object.entries(obj)) {
             if (k === key) {
                 for (let idx = 0; idx < obj[k].fields.length; idx++) {
                     try {
                         let colNameOrig = obj[k].fields[idx].String.str;
-                        let hashedColumnName = await getColumnHash(colNameOrig);
-                        if (!hashedColumnName) {
+                        let hashedColumnName;
+                        if (checkdb) {
+                            hashedColumnName = await getColumnHash(colNameOrig);
+                            if (!hashedColumnName) {
+                                hashedColumnName = sha256Hash(colNameOrig);
+                                await insertColumnHash(colNameOrig, hashedColumnName);
+                            }                                
+                        } else {
                             hashedColumnName = sha256Hash(colNameOrig);
-                            await insertColumnHash(colNameOrig, hashedColumnName);
-                        }
+                        };
                         obj[k].fields[idx].String.str = hashedColumnName;
                     } catch (error) {
                         continue;
@@ -52,7 +57,7 @@ async function hashAllColumnRefObjects(obj, key) {
             }
 
             if (typeof v === 'object' || Array.isArray(v)) {
-                await hashAllColumnRefObjects(v, key);
+                await hashAllColumnRefObjects(v, key, checkdb);
             }
         }
     }
