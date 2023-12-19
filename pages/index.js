@@ -6,12 +6,26 @@ export default function Home() {
   const [hashSuccess, setHashSuccess] = useState(true);
   const [hashedQuery, setHashedQuery] = useState('');
   const [hashMap, setHashMap] = useState({});
-  const textareaRef = useRef(null); // Ref to the textarea element
+  const textareaRef = useRef(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const adjustTextareaHeight = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'inherit'; // Reset height to recalculate
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Set height to scroll height
+    }
+  };
+
+  const handleDeleteAll = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete all entries?");
+    if (confirmDelete) {
+      const response = await fetch('/api/delete-all-entries', { method: 'DELETE' });
+      if (response.ok) {
+        setHashMap({});
+        alert('All entries deleted successfully');
+      } else {
+        alert('Failed to delete entries');
+      }
     }
   };
 
@@ -76,7 +90,7 @@ export default function Home() {
             style={{ maxHeight: '600px', overflowY: 'auto' }} // Inline styles for max height and scroll
           ></textarea>
           <br />
-          <button type="submit">Submit</button>
+          <button className='operation-button' type="submit">Submit</button>
         </form>
       </div>
       {
@@ -93,6 +107,16 @@ export default function Home() {
       <div>
         <h2>Column-Hash Database</h2>
         <pre className="wrapped-query">{JSON.stringify(hashMap, null, 2)}</pre>
+      </div>
+      <div>
+        <button className='view-button' 
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}>{isDropdownOpen ? 'Hide Settings' : 'Settings'}
+        </button>
+        {isDropdownOpen && (
+          <div>
+            <button className='operation-button' onClick={handleDeleteAll}>Delete All Entries</button>
+          </div>
+        )}
       </div>
     </div>
   );

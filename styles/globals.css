@@ -13,15 +13,15 @@ textarea,
 }
 
 textarea {
-  max-height: 600px; /* Maximum height with a scrollbar */
+  max-height: 600px;
   min-height: 150px;
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
   background-color: #f8f8f8;
   font-size: 16px;
-  resize: none; /* Disables manual resizing */
-  overflow-y: auto; /* Adds vertical scrollbar if content exceeds max-height */
+  resize: none;
+  overflow-y: auto;
 }
 
 .wrapped-query {
@@ -34,7 +34,6 @@ textarea {
 }
 
 button {
-  background-color: #1976d2;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -44,29 +43,45 @@ button {
   transition: background-color 0.25s ease, scale 0.1s ease;
 }
 
-button:hover {
+button.operation-button {
+  background-color: #1976d2;
+}
+
+button.operation-button:hover {
   background-color: #1976d2ac;
   transition: background-color 0.25s ease;
 }
 
-button:active {
+button.operation-button:active {
   background-color: #145698ac;
   scale: 0.95;
   transition: background-color 0.25s ease, scale 0.1s ease;
 }
 
+button.view-button {
+  background-color: #ababab;
+  color: rgb(255, 255, 255);
+}
+
+button.view-button:hover {
+  background-color: #808080;
+  color: rgb(255, 255, 255);
+}
+
+button.view-button:active {
+  background-color: #565656;
+  color: rgb(255, 255, 255);
+}
+
 body {
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   background-color: #d8d8d8de;
-  /* Light grey background */
   color: #333;
-  /* Darker text for readability */
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
   transition: background-color 0.3s ease;
-  /* Smooth transition for background color */
 }
 
 #__next {
@@ -83,26 +98,20 @@ body {
   border-radius: 8px;
   box-sizing: border-box;
   margin: auto;
-  /* Center align the container */
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   transition: padding 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease;
-  /* Smooth transitions for padding, border-radius and box-shadow */
 }
 
 /* Media query for mobile devices */
 @media (max-width: 760px) {
   body {
     background-color: white;
-    /* White background on mobile */
   }
 
   .container {
     padding: 15px;
-    /* Reduced padding on mobile */
     border-radius: 0;
-    /* Remove border-radius on mobile */
     box-shadow: none;
-    /* Remove box-shadow on mobile */
   }
 }
 
