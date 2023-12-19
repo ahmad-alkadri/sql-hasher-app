@@ -28,9 +28,12 @@ textarea {
   background: #f0f0f0;
 }
 
-.wrapped-query-error {
-  background: #ffbbbb;
-  color: rgb(150, 0, 0);
+.error-message {
+  color: rgb(225, 0, 0);
+  background: #ffc9c9;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 15px 0px 15px 0px;
 }
 
 button {

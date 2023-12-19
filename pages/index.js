@@ -8,6 +8,7 @@ export default function Home() {
   const [hashMap, setHashMap] = useState({});
   const textareaRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const adjustTextareaHeight = () => {
     if (textareaRef.current) {
@@ -30,28 +31,39 @@ export default function Home() {
   };
 
   const handleQueryChange = (e) => {
-    setQuery(e.target.value);
+    const newQuery = e.target.value;
+    setQuery(newQuery);
     adjustTextareaHeight(); // Adjust the height whenever the query changes
+    if (!newQuery) {
+      setErrorMessage('');
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage(''); // Reset the error message on new submission
 
-    const response = await fetch('/api/hash-query', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query }),
-    });
+    try {
+      const response = await fetch('/api/hash-query', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.status === 200) {
-      setHashedQuery(data.hashedQuery);
-      setHashSuccess(true);
-    } else {
+      if (response.ok) {
+        setHashedQuery(data.hashedQuery);
+        setHashSuccess(true);
+      } else {
+        setHashSuccess(false);
+        setErrorMessage(data.error || 'An error occurred while processing your query.');
+      }
+    } catch (error) {
       setHashSuccess(false);
+      setErrorMessage('Failed to send request. Please check your connection.');
     }
   };
 
@@ -94,14 +106,14 @@ export default function Home() {
         </form>
       </div>
       {
-        hashedQuery.length > 0 && <div>
-          <h2>Hashed SQL Query</h2>
-          <pre className="wrapped-query">{hashedQuery}</pre>
+        errorMessage && <div className="error-message">
+          {errorMessage}
         </div>
       }
       {
-        !hashSuccess && query && <div>
-          <pre className="wrapped-query-error">Error found when trying to parse SQL query. Please check your query and the terminal log.</pre>
+        hashedQuery.length > 0 && <div>
+          <h2>Hashed SQL Query</h2>
+          <pre className="wrapped-query">{hashedQuery}</pre>
         </div>
       }
       <div>
@@ -109,7 +121,7 @@ export default function Home() {
         <pre className="wrapped-query">{JSON.stringify(hashMap, null, 2)}</pre>
       </div>
       <div>
-        <button className='view-button' 
+        <button className='view-button'
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}>{isDropdownOpen ? 'Hide Settings' : 'Settings'}
         </button>
         {isDropdownOpen && (
