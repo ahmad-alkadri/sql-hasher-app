@@ -18,7 +18,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 To clone the project and get started, run the following commands:
 
 ```bash
-git clone https://github.com/your-repository/sql-hasher-app.git
+git clone https://github.com/ahmad-alkadri/sql-hasher-app.git
 cd sql-hasher-app
 ```
 
