@@ -54,7 +54,9 @@ npm run dev
 ```
 
 This will start the Next.js development server, by default accessible
-at http://localhost:3000.
+at http://localhost:3000. Screenshot:
+
+![image](https://github.com/ahmad-alkadri/sql-hasher-app/assets/22837764/7f123afb-94d9-40fa-af31-a713e1abafe2)
 
 ## Development
 
