@@ -4,7 +4,8 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). It provides a web interface for hashing SQL query column names. It features a SQLite database to store and manage the hashed column names, an API for hashing queries, and a front-end for user interactions. The application allows users to input SQL queries, returns queries with hashed column names, and provides the ability to view and delete entries in the database.
 
-**A weekend project.** Full blog about it will follow soon!
+**A weekend project** and a proof-of-concept for something I've been working for a while. 
+Full blog about it will follow soon!
 
 ## Getting Started
 
@@ -28,6 +29,22 @@ To install all necessary Node.js packages, simply run:
 
 ```bash
 npm install
+```
+
+To initialize the SQLite database that'll hold the column name x hashed column
+name, run the following:
+
+```bash
+node initializeDb.js
+```
+
+If it goes well, it'll output the following on terminal:
+
+```bash
+Connected to the hashmap SQLite database.
+Table created
+Close the database connection.
+sql-hasher-app $ 
 ```
 
 And finally, to run the application in Development mode:
